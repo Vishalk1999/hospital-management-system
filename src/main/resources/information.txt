@@ -1,0 +1,4 @@
+Hospital management Project Steps:
+
+1.create entity-Patient Class and connect with database using @Entity Hibernate
+2.create repository-PatientRepository interface extends JpaRepository<Patient,Long> for creating query
