@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @ToString
@@ -57,8 +58,8 @@ public class Patient {
     @OneToOne
     @JoinColumn(name = "patient_insurance_id")  // owning side
     private Insurance insurance;
-   // @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
 
-  //  @OneToMany(mappedBy = "patient", cascade = {CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
-  //  private List<Appointment> appointments = new ArrayList<>();
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointment;   //Patient have List Of Appointment
+
 }
