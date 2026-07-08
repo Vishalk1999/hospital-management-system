@@ -62,17 +62,17 @@ public class PatientTests {    //Test data are not save in database they rollbac
             System.out.println(bloodGroupCountResponseEntity);
          */
           // Pagination
-            Page<Patient> patientList = patientRepository
+       /*     Page<Patient> patientList = patientRepository
                     .findAllPatients(PageRequest.of(0, 2,Sort.by("name")));
             for(Patient patient: patientList) {
                 System.out.println(patient);
-
+        */
             /************************   All Upddate Query   *************************************************/
 /*
             int rowUpdated = patientRepository.updateByNameWithId("vishal kale", 1L);
             System.out.println(rowUpdated);
 
- */
-        }
+
+        }*/
     }
 }

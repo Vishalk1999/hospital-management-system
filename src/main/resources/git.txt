@@ -1,0 +1,30 @@
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'kalev@DESKTOP-GV5INGD.(none)')
+
+
+git config --global user.name "Vishalk1999"
+git config --global user.email "kalevishalm97@email.com"
+
+
+Steps:
+cd D:\Project\hospitalManagement
+
+git init
+git status
+git add .
+git commit -m "Initial commit"
+git branch
+git remote add origin https://github.com/your-username/hospital-management-system.git
+git remote -v
+git push -u origin main
