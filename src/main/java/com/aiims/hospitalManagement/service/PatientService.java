@@ -10,12 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PatientService {
- private final PatientRepository patientRepository;
 
-                        /* when this method is complete without error then commit else all
-                        operation are rollback,more powerfull annotation
-                                directly contact with database. @Transactional */
- @Transactional
+   private final PatientRepository patientRepository;/* when this method is complete without error then commit else all  operation are rollback,more powerfull annotation directly contact with database. @Transactional */
+
+    @Transactional
     public Patient getPatientById(Long id) {
 
         Patient p1 = patientRepository.findById(id).orElseThrow();

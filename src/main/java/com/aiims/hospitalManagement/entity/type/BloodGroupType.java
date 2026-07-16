@@ -1,4 +1,4 @@
-package com.aiims.hospitalManagement.type;
+package com.aiims.hospitalManagement.entity.type;
 
 public enum BloodGroupType {
     A_POSITIVE,
