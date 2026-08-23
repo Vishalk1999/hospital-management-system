@@ -22,9 +22,9 @@ public class InsuranceService {
 
         patient.setInsurance(insurance);
         insurance.setPatient(patient); // bidirectional consistency maintainence
+
         return patient;
     }
-
 
     @Transactional
     public Patient disaccociateInsuranceFromPatient(Long patientId) {

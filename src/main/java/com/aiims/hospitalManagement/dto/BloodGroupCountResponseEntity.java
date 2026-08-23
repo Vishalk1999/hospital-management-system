@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @ToString
 public class BloodGroupCountResponseEntity {
+
     private BloodGroupType bloodGroupType;
     private Long count;
-
 }

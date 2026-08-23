@@ -1,0 +1,72 @@
+Create User Entity Class implements UserDetails and implement getAuthorities() method
+Create Security Package with one class CustomUserDetailsService implements UserDetailsService and implement loadUserByUsername().
+I want User Class they not get directly so create UserRepository.
+then return username using findByUsername(username) in Security class create method in userRepository.
+create one authController.(For Making Login End Point)
+create one authService.
+in authController define -private final AuthService authService;
+create LoginResponseDto class:
+create LoginRequestDto class:write above for logn res/req:
+                      -> public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+                                       return ResponseEntity.ok(authService.login(loginRequestDto));
+Create Login Service in AuthService. and take
+    private final AuthenticationManager authenticationManager;
+     take Authentication object for creating Token:
+              public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+                     Authentication authentication= authenticationManager.authenticate(
+                             new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(),loginRequestDto.getPassword())
+                     );
+                   User user = (User) authentication.getPrincipal();  //you can mae token easily using USer.
+                 }
+
+Add JWT 3 Dependencies.
+Create one AuthUtil Class for Secrete Key and write token value in env variable. create injecton @Value
+
+     private SecretKey getSecretKey(){
+        return Keys.hmacShaKeyFor(jwtSecreatKey.getBytes(StandardCharsets.UTF_8)); //Convert Secreat Key into hmacShaKeyFor algo
+    }
+
+    create payload in authutil
+        public String generateAccessToken(User user){    //PAYLOAD
+               return Jwts.builder()
+                       .subject(user.getUsername())
+                       .claim("userId",user.getId().toString())
+                       .issuedAt(new Date())
+                       .expiration(new Date(System.currentTimeMillis() +1000*60*10))
+                       .signWith(getSecretKey())
+                       .compact();
+           }
+AuthService add  private final AuthUtil authUtil; and        User user = (User) authentication.getPrincipal();
+
+                                                               String token = authUtil.generateAccessToken(user)
+                                                                      return new LoginResponseDto(token,user.getId());
+Then goto AuthController for creating signup  create signup api,signupResponseDto
+                                  create signup method into AuthService //(//this work is create new user and store in DB)
+
+create class JwtAuthFilter for adding filter.
+              private final UserRepository userRepository;
+                 private final AuthUtil authUtil;
+                 @Override
+                 protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+                  log.info("incoming request: {}",request.getRequestURL());
+
+                  final String requestTokenHeader = request.getHeader("Authorization");
+                  if(requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer")){
+                      filterChain.doFilter(request,response);
+                      return;
+                  }
+                  String token =requestTokenHeader.split("Bearer")[1];
+                  String userName = authUtil.getUserNameFromToken(token);
+
+                  if(userName!=null && SecurityContextHolder.getContext().getAuthentication()==null){
+                      User user =userRepository.findByUsername(userName).orElseThrow();
+
+                   UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=
+                          new  UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
+
+                           SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                       }
+                       filterChain.doFilter(request,response);
+                      }
+                  }
+                 }

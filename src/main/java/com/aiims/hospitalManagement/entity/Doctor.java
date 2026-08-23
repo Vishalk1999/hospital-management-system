@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 @Entity
 @Getter
 @Setter
@@ -19,9 +20,9 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@OneToOne
-    //@MapsId
-   // private User user;
+    @OneToOne
+    @MapsId
+    private User user;
 
     @Column(nullable = false, length = 100)
     private String name;

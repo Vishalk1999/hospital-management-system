@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class InsuranceTests {
 
     @Autowired
-    private InsuranceService insuranceService;  //call Service
+    private InsuranceService insuranceService;
 
     @Autowired
     private AppointmentService appointmentService;
@@ -28,16 +28,18 @@ public class InsuranceTests {
     @Test
     public void testInsurance() {
         Insurance insurance = Insurance.builder()
-                .policyNumber("HDFC_12439")
+                .policyNumber("HDFC_1234")
                 .provider("HDFC")
                 .validUntil(LocalDate.of(2030, 12, 12))
                 .build();
 
-        Patient patient = insuranceService.assignInsuranceToPatient(insurance, 5L);
+        Patient patient = insuranceService.assignInsuranceToPatient(insurance, 1L);
+
         System.out.println(patient);
 
-          var newPatient = insuranceService.disaccociateInsuranceFromPatient(patient.getId());
-          System.out.println(newPatient);
+        var newPatient = insuranceService.disaccociateInsuranceFromPatient(patient.getId());
+
+        System.out.println(newPatient);
     }
 
 

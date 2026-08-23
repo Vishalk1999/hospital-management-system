@@ -1,0 +1,29 @@
+Create GlobalExceptionHandler class
+       @RestControllerAdvice
+       public class GlobalExceptionHandler {
+
+           @ExceptionHandler(UsernameNotFoundException.class)
+           public ResponseEntity<ApiError> handleUsernameNotFoundException(UsernameNotFoundException ex){
+
+               return null;
+           }
+       }
+
+ After Create one ApiError Class
+
+      @Data
+      public class ApiError {
+          private LocalDateTime timeStamp;
+          private String error;
+          private HttpStatus statusCode;
+
+          public ApiError(){
+              this.timeStamp=LocalDateTime.now();
+          }
+
+          public ApiError(String error ,HttpStatus statusCode){
+              this();
+              this.error =error;
+              this.statusCode =statusCode;
+          }
+      }
